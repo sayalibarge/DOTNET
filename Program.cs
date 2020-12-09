@@ -4,315 +4,98 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assg2_update
+
+//1. decimal SimpleInterest(decimal P, decimal N, decimal R) -> returns calculated SimpleInterest
+namespace Assg5_Q1
+{
+    class Program
+    {
+        static void Main1(string[] args)
+        {
+            Func<decimal, decimal, decimal, decimal> o1 = (p, n, r) => (p * n * r) / 100;
+            Console.WriteLine("Simple Interest :" + o1(2000, 100, 5));
+            Console.ReadLine();
+        }
+    }
+}
+//2. bool IsGreater(int a, int b) -> returns true if a is > b
+namespace Assg5_Q2
+{
+    class Program
+    {
+        static void Main2()
+        {
+            Func<int, int, bool> o2 = (a, b) => a > b;
+            Console.WriteLine(o2(200, 100));
+            Console.ReadLine();
+        }
+    }
+}
+//3. decimal GetBasic(Employee e) -> returns the Basic salary of the employee
+namespace Assg5_Q3
+{
+    class Program
+    {
+        static void Main3(string[] args)
+        {
+            Employee e = new Employee();
+            Func<Employee, decimal> o3 = emp => emp.getBasic(e);
+            Console.WriteLine("Basic salary of Employee is : " + o3(e));
+            Console.ReadLine();
+        }
+    }
+
+    class Employee
+    {
+        public decimal basic = 1500;
+
+        public decimal getBasic(Employee emp)
+        {
+            return emp.basic;
+        }
+    }
+
+}
+//4. bool IsEven(int num) -> returns true if the number is an even number
+namespace Assg5_Q4
+{
+    class Program
+    {
+        static void Main4(string[] args)
+        {
+            Predicate<int> o = a => a % 2 == 0;
+            Console.WriteLine(o(6));
+            Console.ReadLine();
+        }
+    }
+}
+//5. bool IsGreaterThan10000(Employee e) -> returns true if the Basic Salary is > 10000
+
+namespace Assg5_Q5
 {
     class Program
     {
         static void Main(string[] args)
         {
-
-            Employee e1 = new Manager("A", 10, 2000, "tech manager");
-            Employee e2 = new GeneralManager("B", 20, 5000, "HR manager", "xyz");
-            Employee e3 = new CEO("C", 30, 10000);
-            Console.WriteLine(e3.CalacNetSalary());//50000
-            e3.Add();
-            e3.Select();
-            e3.Remove();
-            e3.Update();
-            Console.WriteLine(e2.CalacNetSalary());//15000
-            e2.Add();
-            e2.Select();
-            e2.Remove();
-            e2.Update();
-            Console.WriteLine(e1.CalacNetSalary());//4000
-            e1.Add();
-            e1.Select();
-            e1.Remove();
-            e1.Update();
-
-
+            Employee e = new Employee();
+            Predicate<Employee> o5 = emp => emp.IsGreaterThan10000(e);
+            Console.WriteLine("IsGreater = " + o5(e));
             Console.ReadLine();
-
         }
-    }
-
-    public interface IDbFunctions
-    {
-        void Select();
-
-        void Add();
-
-        void Remove();
-
-        void Update();
-    }
-
-    public abstract class Employee : IDbFunctions
-    {
-        private string name;
-
-        public string Name
+        class Employee
         {
-            get
+            public decimal basic = 15000;
+
+            public decimal getBasic(Employee emp)
             {
-                return name;
-            }
-            set
-            {
-                name = value;
-            }
-        }
-
-        private static int lastEmpNo = 0;
-
-        private int empNo;
-
-        public int Empno
-        {
-            get { return empNo; }
-            private set
-            {
-                empNo = value;
-            }
-        }
-
-        private short deptNo;
-
-        public short DeptNo
-        {
-            get
-            {
-                return deptNo;
+                return emp.basic;
             }
 
-            set
+            public bool IsGreaterThan10000(Employee emp1)
             {
-                if (value > 0)
-                {
-                    deptNo = value;
-                }
-                else
-                {
-                    Console.WriteLine("department number should be greater than 0");
-                }
+                return emp1.basic > 10000;
             }
-        }
-
-        public Employee(string name = "noname", short deptNo = 1, decimal basic = 0)
-        {
-            empNo = ++lastEmpNo;
-            this.name = name;
-            this.deptNo = deptNo;
-            this.basic = basic;
-        }
-
-
-        protected decimal basic;
-        public abstract decimal Basic
-        {
-            get;
-            set;
-        }
-
-        public abstract decimal CalacNetSalary();
-
-        public virtual void Select()
-        {
-            Console.WriteLine("Employee : Select");
-        }
-
-        public virtual void Add()
-        {
-            Console.WriteLine("Employee : Add");
-        }
-
-        public virtual void Remove()
-        {
-            Console.WriteLine("Employee : Remove");
-        }
-
-        public virtual void Update()
-        {
-            Console.WriteLine("Employee : Update");
-        }
-    }
-
-    public class Manager : Employee, IDbFunctions
-    {
-        private string designation;
-        public string Designation
-        {
-            get
-            {
-                return designation;
-            }
-            set
-            {
-                designation = value;
-            }
-        }
-
-        //private decimal basic;
-        public override decimal Basic
-        {
-            get
-            {
-
-                return basic;
-            }
-            set
-            {
-
-                basic = value;
-            }
-        }
-
-        public Manager(string name, short deptNo, decimal basic, string designation = "manager") : base(name, deptNo, basic)
-        {
-
-            //this.basic = basic;
-            this.designation = designation;
-
-        }
-
-
-
-        public override decimal CalacNetSalary()
-        {
-
-            return Basic * 2;
-        }
-
-        public override void Select()
-        {
-            Console.WriteLine("Manager : Select");
-        }
-
-        public override void Add()
-        {
-            Console.WriteLine("Manager : Add");
-        }
-
-        public override void Remove()
-        {
-            Console.WriteLine("Manager : Remove");
-        }
-
-        public override void Update()
-        {
-            Console.WriteLine("Manager : Update");
         }
 
     }
-
-    public class GeneralManager : Manager, IDbFunctions
-    {
-        private string perks;
-
-        public string Perks
-        {
-            get
-            {
-                return perks;
-            }
-            set
-            {
-                perks = value;
-            }
-        }
-        //private decimal basic;
-
-        public override decimal Basic
-        {
-            get
-            {
-                return basic;
-            }
-            set
-            {
-                basic = value;
-            }
-        }
-
-        public GeneralManager(string name, short deptNo, decimal basic, string designation, string perks) : base(name, deptNo, basic, designation)
-        {
-            //this.basic = basic;
-            this.perks = perks;
-        }
-
-        public sealed override decimal CalacNetSalary()
-        {
-            return Basic * 3;
-        }
-
-        public sealed override void Select()
-        {
-            Console.WriteLine("GeneralManager : Select");
-        }
-
-        public sealed override void Add()
-        {
-            Console.WriteLine("GeneralManager : Add");
-        }
-
-        public sealed override void Remove()
-        {
-            Console.WriteLine("GeneralManager : Remove");
-        }
-
-        public sealed override void Update()
-        {
-            Console.WriteLine("GeneralManager : Update");
-        }
-
-    }
-
-    public class CEO : Employee, IDbFunctions
-    {
-
-        //private decimal basic;
-        public override decimal Basic
-        {
-            get
-            {
-                return basic;
-            }
-            set
-            {
-                basic = value;
-            }
-        }
-
-        public override sealed decimal CalacNetSalary()
-        {
-            return Basic * 5;
-        }
-
-        public CEO(string name, short deptNo, decimal basic) : base(name, deptNo, basic)
-        {
-            //this.basic = basic;
-        }
-
-        public sealed override void Select()
-        {
-            Console.WriteLine("CEO : Select");
-        }
-
-        public sealed override void Add()
-        {
-            Console.WriteLine("CEO : Add");
-        }
-
-        public sealed override void Remove()
-        {
-            Console.WriteLine("CEO : Remove");
-        }
-
-        public sealed override void Update()
-        {
-            Console.WriteLine("CEO : Update");
-        }
-
-    }
-
 }
